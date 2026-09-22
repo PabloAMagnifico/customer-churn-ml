@@ -6,6 +6,7 @@ el proyecto pueda ejecutarse aun cuando la herramienta MLOps no esté disponible
 from __future__ import annotations
 
 import json
+import os
 import sys
 from pathlib import Path
 
@@ -25,7 +26,7 @@ from src.training.models import get_model_specs  # noqa: E402
 
 
 def main():
-    mlflow.set_tracking_uri(f"sqlite:///{MLFLOW_DB}")
+    mlflow.set_tracking_uri(os.getenv("MLFLOW_TRACKING_URI", f"sqlite:///{MLFLOW_DB}"))
     mlflow.set_experiment("customer-churn-entrega-1")
     df = load_historical_data(DATA_PATH)
     X = df.drop(columns=[TARGET, "customerID"])
@@ -46,7 +47,7 @@ def main():
             out = ROOT / "reports" / "metrics" / f"{run_name}.json"
             out.write_text(json.dumps({"run_id": run.info.run_id, "run_name": run_name, **metrics}, indent=2), encoding="utf-8")
             mlflow.log_artifact(str(out), artifact_path="metrics")
-            mlflow.sklearn.log_model(pipe, name="model")
+            mlflow.sklearn.log_model(pipe, name="model", skops_trusted_types=["numpy.dtype"])
 
     print("Runs registrados. Abrí MLflow y usa el mejor Run para registrar el candidato en Model Registry.")
 
