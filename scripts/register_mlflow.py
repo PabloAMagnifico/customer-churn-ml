@@ -47,7 +47,7 @@ def main():
             out = ROOT / "reports" / "metrics" / f"{run_name}.json"
             out.write_text(json.dumps({"run_id": run.info.run_id, "run_name": run_name, **metrics}, indent=2), encoding="utf-8")
             mlflow.log_artifact(str(out), artifact_path="metrics")
-            mlflow.sklearn.log_model(pipe, name="model", skops_trusted_types=["numpy.dtype"])
+            mlflow.sklearn.log_model(pipe, name="model", skops_trusted_types=["numpy.dtype", "sklearn.tree._tree.Tree"])
 
     print("Runs registrados. Abrí MLflow y usa el mejor Run para registrar el candidato en Model Registry.")
 
