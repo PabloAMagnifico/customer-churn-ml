@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+
+# Data tracked by DVC, not Git
+data/raw/*.csv
+
+# Local experiment state
+mlruns/
+mlflow.db
+artifacts/
+reports/figures/*.png
+reports/metrics/*.json
+models/*.joblib
+
+# Secrets / local config
+.env
+.dvc/config.local
+
+# OS / IDE
+.DS_Store
+.vscode/
+.idea/

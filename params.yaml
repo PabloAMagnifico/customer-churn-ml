@@ -1,0 +1,5 @@
+seed: 42
+test_size: 0.20
+target: Churn
+id_column: customerID
+candidate_model: logistic_c1

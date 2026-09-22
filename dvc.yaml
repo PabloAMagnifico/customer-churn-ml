@@ -1,0 +1,20 @@
+stages:
+  train:
+    cmd: python -m src.training.train
+    deps:
+      - data/raw/customer_churn_historical.csv
+      - src/config.py
+      - src/data/load.py
+      - src/evaluation/metrics.py
+      - src/features/pipeline.py
+      - src/training/models.py
+      - src/training/train.py
+    params:
+      - seed
+      - test_size
+      - candidate_model
+    outs:
+      - models/candidate_logistic_c1.joblib
+    metrics:
+      - reports/metrics/model_comparison.csv:
+          cache: false
