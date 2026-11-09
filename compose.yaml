@@ -1,0 +1,13 @@
+services:
+  api:
+    build: .
+    image: customer-churn-api:entrega-2
+    container_name: customer-churn-api
+    ports:
+      - "8000:8000"
+    environment:
+      MODEL_PATH: /app/models/candidate_logistic_c1.joblib
+      MODEL_VERSION: logistic_c1-candidate
+      PREDICTION_THRESHOLD: "0.50"
+      LOG_LEVEL: INFO
+    restart: unless-stopped
